@@ -28,7 +28,7 @@ counttable
 group by player;
 
 
--- Create a vew in the database to provide an up to date list of the total number of matches played and wins for each player.
+-- Create a view in the database to provide an up to date list of the total number of matches played and wins for each player.
 create view Player_Standings as 
 select id, name, wins, count(MP.matches)  matches
 from 
@@ -44,7 +44,7 @@ group by id, name, wins
 order by wins desc;
 
 
--- Create a vew in the database to provide the game pairings throughout a tournament.
+-- Create a view in the database to provide the game pairings throughout a tournament.
 create view swissPairings as
 select a.id id1, a.name name1, b.id id2, b.name name2
 from 

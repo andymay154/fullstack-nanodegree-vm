@@ -21,3 +21,28 @@ There are *eight* functions within the tournament.py file as follows:
 * reportMatch(winner, loser): _Records the outcome of a single match between two players. Args: winner= the id number of the player who won, loser=  the id number of the player who lost_
 * swissPairings(): _Returns a list of pairs of players for the next round of a match_
 
+
+# Database structure
+
+The database is called *tournament* and consists of the following:
+
+### Tables
+
+* Players
+    - _playerid
+    - name_
+
+* Matches 
+    - matchid
+    - winner
+    - loser_
+
+### Views
+
+There are some SQL views in the database to provide the data for the Python functions.
+
+* Matches_Played: _Returns the total number of matches played by each player_
+* Player_Standings: _Returns the total number of matches played AND number of wins for each player_
+* swissPairings: _Provides the game pairings throughout a tournament_
+
+
