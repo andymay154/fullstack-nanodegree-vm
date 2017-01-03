@@ -12,14 +12,14 @@ The tournament.py file is written in Python 2.7, so you may first need to instal
 
 There are *eight* functions within the tournament.py file as follows:
 
-* connect(): _Connects to the database prepared by the tournament.sql file_
-* deleteMatches(): _Remove all the match records from the database._
-* deletePlayers(): _Remove all the player records from the database._
-* countPlayers(): _Returns the number of players currently registered_
-* registerPlayer(name): _Adds a player to the tournament database. Args: name= the player's full name (need not be unique)_
-* playerStandings(): _Returns a list of the players and their win records, sorted by wins_
-* reportMatch(winner, loser): _Records the outcome of a single match between two players. Args: winner= the id number of the player who won, loser=  the id number of the player who lost_
-* swissPairings(): _Returns a list of pairs of players for the next round of a match_
+* *connect()*: _Connects to the database prepared by the tournament.sql file_
+* *deleteMatches()*: _Remove all the match records from the database._
+* *deletePlayers()*: _Remove all the player records from the database._
+* *countPlayers()*: _Returns the number of players currently registered_
+* *registerPlayer(name)*: _Adds a player to the tournament database. Args: name= the player's full name (need not be unique)_
+* *playerStandings()*: _Returns a list of the players and their win records, sorted by wins_
+* *reportMatch(winner, loser)*: _Records the outcome of a single match between two players. Args: winner= the id number of the player who won, loser=  the id number of the player who lost_
+* *swissPairings()*: _Returns a list of pairs of players for the next round of a match_
 
 
 # Database structure
@@ -28,11 +28,11 @@ The database is called *tournament* and consists of the following:
 
 ### Tables
 
-* Players
+* *Players*
     - _playerid
     - name_
 
-* Matches 
+* *Matches* 
     - matchid
     - winner
     - loser_
@@ -41,8 +41,8 @@ The database is called *tournament* and consists of the following:
 
 There are some SQL views in the database to provide the data for the Python functions.
 
-* Matches_Played: _Returns the total number of matches played by each player_
-* Player_Standings: _Returns the total number of matches played AND number of wins for each player_
-* swissPairings: _Provides the game pairings throughout a tournament_
+* *Matches_Played*: _Returns the total number of matches played by each player_
+* *Player_Standings*: _Returns the total number of matches played AND number of wins for each player_
+* *swissPairings*: _Provides the game pairings throughout a tournament_
 
 
