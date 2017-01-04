@@ -6,62 +6,62 @@
 -- You can write comments in this file by starting them with two dashes, like
 -- these lines here.
 
-drop database if exists tournament;
+DROP database IF EXISTS tournament;
 
-create database tournament;
+CREATE database tournament;
 
 \c tournament;
 
-create table Players (playerid serial primary key, name varchar(40));
+CREATE TABLE Players (playerid SERIAL PRIMARY KEY, name VARCHAR(40));
 
-create table Matches (matchid serial primary key, winner smallint, loser smallint);
+CREATE TABLE Matches (matchid SERIAL PRIMARY KEY, winner SMALLINT REFERENCES Players(playerid) , loser SMALLINT REFERENCES Players(playerid));
 
 
 -- Create a view in the database to list the total number of matches played by each player.
-create view Matches_Played as 
-select player, sum(playermatches) matches
-from (
-select winner player, count(winner) playermatches from Matches group by winner 
-union all 
-select loser player, count(loser) playermatches from Matches group by loser) 
+CREATE VIEW Matches_Played AS 
+SELECT player, SUM(playermatches) matches
+FROM (
+SELECT winner player, COUNT(winner) playermatches FROM Matches GROUP BY winner 
+UNION ALL 
+SELECT loser player, COUNT(loser) playermatches FROM Matches GROUP BY loser) 
 counttable 
-group by player;
+GROUP BY player;
 
 
 -- Create a view in the database to provide an up to date list of the total number of matches played and wins for each player.
-create view Player_Standings as 
-select id, name, wins, count(MP.matches)  matches
-from 
+CREATE VIEW Player_Standings AS 
+SELECT id, name, wins, COUNT(MP.matches)  matches
+FROM 
 (
-select playerid id, name, count(winner) wins--M.wins--, MP.matchesplayed 
-from Players 
-left join Matches
-on Players.playerid = Matches.winner
-group by playerid, name
+SELECT playerid id, name, COUNT(winner) wins--M.wins--, MP.matchesplayed 
+FROM Players 
+LEFT JOIN Matches
+ON Players.playerid = Matches.winner
+GROUP BY playerid, name
 ) T
-left join Matches_Played MP on T.id = MP.player
-group by id, name, wins
-order by wins desc;
+LEFT JOIN Matches_Played MP ON T.id = MP.player
+GROUP BY id, name, wins
+ORDER BY wins DESC;
 
 
 -- Create a view in the database to provide the game pairings throughout a tournament.
-create view swissPairings as
-select a.id id1, a.name name1, b.id id2, b.name name2
-from 
+CREATE VIEW swissPairings AS
+SELECT a.id id1, a.name name1, b.id id2, b.name name2
+FROM 
 (
 -- use the sql row function to create a unique row number for every row in the table.
-select row_number() over (order by wins) rowNumber, id, name
-from Player_Standings
+SELECT ROW_NUMBER() over (ORDER BY wins) rowNumber, id, name
+FROM Player_Standings
 ) a
-left join
+LEFT JOIN
 (
-select row_number() over (order by wins) rowNumber, id, name
-from Player_Standings
+SELECT ROW_NUMBER() over (ORDER BY wins) rowNumber, id, name
+FROM Player_Standings
 ) b
 -- Add 1 to the left hand table row numbers and join it to the row numbers on the right hand table.
-on a.rowNumber+1 = b.rowNumber 
+ON a.rowNumber+1 = b.rowNumber 
 -- Use the Modulo function to divide row number by two and select only those where the remainder is 0, therby eliminating the odd numbered rows.
-where b.rowNumber % 2 =0
+WHERE b.rowNumber % 2 =0
 
 
 
