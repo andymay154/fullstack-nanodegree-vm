@@ -4,7 +4,10 @@ This project cosists of a tournament.sql file to prepare a database and a tounam
 
 ## Getting Started
 
-You will need to access a PSQL database in order to run the tournament.sql file and prepare the database. From the PSQL commant promptou are located in the directory containing the tournament sql and tournament.py files, then input `\i tournament.sql`. This will create the necessary database and views.
+You will need to access a PSQL database in order to run the tournament.sql file and prepare the database. To do this:
+
+* Make sure you have navigated to the folder containing the tournament sql and tournament.py files.
+* From the PSQL command prompt input `\i tournament.sql`. This will create the necessary database and views.
 
 You can then call the functions available within the tournament.py python file, which is written in Python version 2.7.
 
