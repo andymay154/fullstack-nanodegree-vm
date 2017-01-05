@@ -14,7 +14,7 @@ CREATE database tournament;
 
 CREATE TABLE Players (playerid SERIAL PRIMARY KEY, name VARCHAR(40));
 
-CREATE TABLE Matches (matchid SERIAL PRIMARY KEY, winner SMALLINT REFERENCES Players(playerid) , loser SMALLINT REFERENCES Players(playerid));
+CREATE TABLE Matches (matchid SERIAL PRIMARY KEY, winner SMALLINT REFERENCES Players(playerid)  ON DELETE CASCADE, loser SMALLINT REFERENCES Players(playerid) ON DELETE CASCADE);
 
 
 -- Create a view in the database to list the total number of matches played by each player.

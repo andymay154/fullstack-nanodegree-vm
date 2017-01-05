@@ -21,21 +21,21 @@ def connect():
 def deleteMatches():
     """Remove all the match records from the database."""
     db, c = connect()
-    c.execute("truncate matches;")
+    c.execute("TRUNCATE matches;")
     db.commit()
     db.close()
 
 def deletePlayers():
     """Remove all the player records from the database, alond with matches which would no longer relate to anything."""
     db, c = connect()
-    c.execute("truncate matches, players;")
+    c.execute("TRUNCATE players CASCADE;")
     db.commit()
     db.close()
 
 def countPlayers():
     """Returns the number of players currently registered."""
     db, c = connect()
-    c.execute("select count(*) from players;")
+    c.execute("SELECT COUNT(*) FROM players;")
     playercount = c.fetchone()[0]
     db.close()
     return playercount
@@ -47,7 +47,7 @@ def registerPlayer(name):
       Args:
       name: the player's full name (need not be unique).
     """
-    query = "insert into players (name) values (%s);"
+    query = "INSERT INTO players (name) VALUES (%s);"
     args = (name,)
     db, c = connect()
     c.execute(query, args)
@@ -67,12 +67,9 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
-    
-    """conn = connect()
-    c = conn.cursor()"""
 
     db, c = connect()
-    c.execute("select id, name, wins, matches from Player_Standings;")
+    c.execute("SELECT id, name, wins, matches FROM Player_Standings;")
     playerstandings = c.fetchall()
     db.close()
     return playerstandings
@@ -85,7 +82,7 @@ def reportMatch(winner, loser):
       loser:  the id number of the player who lost
     """
     db, c = connect()
-    query = "insert into Matches (winner, loser) values (%s, %s);"
+    query = "INSERT INTO Matches (winner, loser) VALUES (%s, %s);"
     args = (winner, loser)
     c.execute(query, args)
     db.commit()
@@ -107,7 +104,7 @@ def swissPairings():
         name2: the second player's name
     """
     db, c = connect()
-    c.execute("select id1, name1, id2, name2 from swissPairings;")
+    c.execute("SELECT id1, name1, id2, name2 FROM swissPairings;")
     swisspairing = c.fetchall()
     db.close()
     return swisspairing
